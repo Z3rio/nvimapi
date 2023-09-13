@@ -1,7 +1,11 @@
 import express, { Express, Request, Response } from "express";
 import { Server } from "@zerio2/qbcore.js";
-import { isPasswordValid, port, Resource } from "../shared";
+import { isPasswordValid, Resource } from "../shared";
+import { config } from "dotenv";
 
+config({
+  path: `${GetResourcePath(GetCurrentResourceName())}/.env`,
+});
 const app: Express = express();
 const qbcore: Server = global.exports["qb-core"].GetCoreObject();
 
@@ -65,6 +69,6 @@ app.all("*", function (_req: Request, res: Response) {
   });
 });
 
-app.listen(port, () => {
-  console.log(`FiveM.nvim API is listening on port ${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(`FiveM.nvim API is listening on port ${process.env.PORT}`);
 });
