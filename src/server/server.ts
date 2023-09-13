@@ -1,9 +1,27 @@
 import express, { Express, Request, Response } from "express";
 import { Server } from "@zerio2/qbcore.js";
-import { port, Resource } from "../shared";
+import { isPasswordValid, port, Resource } from "../shared";
 
 const app: Express = express();
 const qbcore: Server = global.exports["qb-core"].GetCoreObject();
+
+app.use((req, res, next) => {
+  if (req.query && req.query.password) {
+    if (isPasswordValid(req.query.password.toString())) {
+      next();
+    } else {
+      res.status(401);
+      res.json({
+        err: "Incorrect password",
+      });
+    }
+  } else {
+    res.status(400);
+    res.json({
+      err: "Invalid body",
+    });
+  }
+});
 
 app.get("/players/count", (_req: Request, res: Response) => {
   const players = qbcore.Functions.GetQBPlayers();
