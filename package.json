@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
-    "build": "esbuild client=src/client/client.ts server=src/server/server.ts shared=src/shared/shared.ts --bundle --outdir=build --minify --target=es2015 --platform=node",
+    "build": "esbuild client=src/client/client.ts server=src/server/server.ts --bundle --outdir=build --minify --target=es2015 --platform=node",
     "dev": "nodemon"
   },
   "author": "",
@@ -17,11 +17,13 @@
     "@types/node": "^18.7.14",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
+    "@zerio2/qbcore.js": "^1.5.4",
     "esbuild": "^0.15.6",
     "eslint": "^8.39.0"
   },
   "dependencies": {
-    "@fornuftbergets/fbrp-core": "^1.0.2",
+    "@types/express": "^4.17.17",
+    "express": "^4.18.2",
     "nodemon": "^2.0.19"
   }
 }

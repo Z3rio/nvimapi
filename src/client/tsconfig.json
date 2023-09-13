@@ -8,13 +8,8 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "./**/*",
-    "../shared"
-  ],
-  "exclude": [
-    "**/node_modules"
-  ]
+  "include": ["./**/*", "../shared"],
+  "exclude": ["**/node_modules"]
 }
