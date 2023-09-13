@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "./build",
+    "strict": true,
+    "types": ["@citizenfx/client", "@types/node"],
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+  },
+  "include": [
+    "./**/*",
+    "../shared"
+  ],
+  "exclude": [
+    "**/node_modules"
+  ]
+}

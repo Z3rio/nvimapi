@@ -1,0 +1,19 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+        "no-unreachable": 2,
+        "consistent-return": 1,
+        "require-await": 1,
+        "comma-dangle": 1,
+        "no-console": 0 // This should give warning but in some scripts we want printing, this should go through LOGGING tho....
+    }
+}

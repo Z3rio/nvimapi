@@ -1,0 +1,5 @@
+{
+    "watch": ["src/**"],
+    "ext": "ts js",
+    "exec": "esbuild client=src/client/client.ts server=src/server/server.ts shared=src/server/server.ts --bundle --outdir=build --target=es2015 --platform=node  && eslint . --ext .ts"
+}

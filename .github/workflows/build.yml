@@ -1,0 +1,51 @@
+name: Lint & Build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build TypeScript code
+        run: npm run build
+
+      - name: Check build status
+        if: ${{ success() }}
+        run: echo "Build succeeded"
+        
+      - name: Handle build failure
+        if: ${{ failure() }}
+        run: echo "Build failed" && exit 1
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run linter
+        run: npm run lint
