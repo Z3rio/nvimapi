@@ -1,7 +1,8 @@
 import express, { Express, Request, Response } from "express";
 import { Server } from "@zerio2/qbcore.js";
-import { isPasswordValid, Resource } from "../shared";
+import { isPasswordValid } from "../shared";
 import { config } from "dotenv";
+import { setup as setupModules } from "./modules";
 
 config({
   path: `${GetResourcePath(GetCurrentResourceName())}/.env`,
@@ -27,40 +28,7 @@ app.use((req, res, next) => {
   }
 });
 
-app.get("/players/count", (_req: Request, res: Response) => {
-  const players = qbcore.Functions.GetQBPlayers();
-
-  if (Array.isArray(players)) {
-    res.status(200);
-    res.json({
-      count: players.length,
-    });
-  } else {
-    res.status(500);
-    res.json({
-      err: "Players was an object and not array",
-    });
-  }
-});
-
-app.get("/resources/list", (_req: Request, res: Response) => {
-  const resources: Record<string, Resource> = {};
-
-  for (let i = 1; i < GetNumResources(); i++) {
-    const resourceName = GetResourceByFindIndex(i);
-
-    resources[resourceName] = {
-      name: resourceName,
-      version: GetResourceMetadata(resourceName, "version", 0),
-      status: GetResourceState(resourceName),
-    };
-  }
-
-  res.status(200);
-  res.json({
-    list: resources,
-  });
-});
+setupModules(app, qbcore);
 
 app.all("*", function (_req: Request, res: Response) {
   res.status(400);
