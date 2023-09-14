@@ -1,1 +1,1 @@
-export const routesWithoutGuarding = ["/misc/healthCheck"];
+export const routesWithoutGuarding = [];

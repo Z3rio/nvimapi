@@ -24,3 +24,15 @@ export function getOnesyncStatus(): string {
     return "None";
   }
 }
+
+export function getSQLScript(): string {
+  if (GetResourceState("oxmysql") == "started") {
+    return "OX-Mysql";
+  } else if (GetResourceState("ghmattimysql") == "started") {
+    return "Ghmattimysql";
+  } else if (GetResourceState("mysql-async") == "started") {
+    return "MySQL-Async";
+  } else {
+    return "Unknown";
+  }
+}
