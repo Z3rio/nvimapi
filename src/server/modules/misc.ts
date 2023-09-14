@@ -1,5 +1,9 @@
 import { Express, Request, Response } from "express";
-import { getFrameworkStatus, getOnesyncStatus } from "../../shared/";
+import {
+  getFrameworkStatus,
+  getOnesyncStatus,
+  isPasswordValid,
+} from "../../shared/";
 import { Server } from "@zerio2/qbcore.js";
 
 export function createMisc(app: Express, qbcore: Server) {
@@ -21,8 +25,20 @@ export function createMisc(app: Express, qbcore: Server) {
     }
   });
 
-  app.get("/misc/healthCheck", (_req: Request, res: Response) => {
+  app.get("/misc/healthCheck", (req: Request, res: Response) => {
     res.status(200);
-    res.json({});
+    if (req.query && req.query.password) {
+      if (isPasswordValid(req.query.password.toString())) {
+        res.json({});
+      } else {
+        res.json({
+          err: "Incorrect password",
+        });
+      }
+    } else {
+      res.json({
+        err: "Invalid body",
+      });
+    }
   });
 }
