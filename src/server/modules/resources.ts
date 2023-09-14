@@ -20,4 +20,36 @@ export function createResources(app: Express) {
       list: resources,
     });
   });
+
+  app.post("/resources/:name/restart", (req: Request, res: Response) => {
+    if (req.params && req.params.name) {
+      ExecuteCommand(`restart ${req.params.name}`);
+      res.status(200);
+      res.json({});
+    }
+  });
+
+  app.post("/resources/:name/stop", (req: Request, res: Response) => {
+    if (req.params && req.params.name) {
+      ExecuteCommand(`stop ${req.params.name}`);
+      res.status(200);
+      res.json({});
+    }
+  });
+
+  app.post("/resources/:name/ensure", (req: Request, res: Response) => {
+    if (req.params && req.params.name) {
+      ExecuteCommand(`ensure ${req.params.name}`);
+      res.status(200);
+      res.json({});
+    }
+  });
+
+  app.post("/resources/:name/start", (req: Request, res: Response) => {
+    if (req.params && req.params.name) {
+      ExecuteCommand(`start ${req.params.name}`);
+      res.status(200);
+      res.json({});
+    }
+  });
 }
