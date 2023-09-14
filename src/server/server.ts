@@ -10,6 +10,13 @@ config({
 const app: Express = express();
 const qbcore: Server = global.exports["qb-core"].GetCoreObject();
 
+if (process.env.DEBUG == "true") {
+  app.use((req, _res, next) => {
+    console.log(`Path triggered: ${req.url}`);
+    next();
+  });
+}
+
 app.use((req, res, next) => {
   if (req.query && req.query.password) {
     if (isPasswordValid(req.query.password.toString())) {
