@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import { Server } from "@zerio2/qbcore.js";
-import { isPasswordValid } from "../shared";
+import { isPasswordValid, routesWithoutGuarding } from "../shared";
 import { config } from "dotenv";
 import { setup as setupModules } from "./modules";
 
@@ -18,20 +18,24 @@ if (process.env.DEBUG == "true") {
 }
 
 app.use((req, res, next) => {
-  if (req.query && req.query.password) {
-    if (isPasswordValid(req.query.password.toString())) {
-      next();
+  if (routesWithoutGuarding.includes(req.url)) {
+    next();
+  } else {
+    if (req.query && req.query.password) {
+      if (isPasswordValid(req.query.password.toString())) {
+        next();
+      } else {
+        res.status(401);
+        res.json({
+          err: "Incorrect password",
+        });
+      }
     } else {
-      res.status(401);
+      res.status(400);
       res.json({
-        err: "Incorrect password",
+        err: "Invalid body",
       });
     }
-  } else {
-    res.status(400);
-    res.json({
-      err: "Invalid body",
-    });
   }
 });
 

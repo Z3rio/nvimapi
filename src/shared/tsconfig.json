@@ -5,7 +5,7 @@
     "outDir": "./build",
     "strict": true,
     "moduleResolution": "node",
-    "types": ["@types/node"],
+    "types": ["@types/node", "@citizenfx/client", "@citizenfx/server"],
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
