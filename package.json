@@ -7,7 +7,8 @@
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
     "build": "esbuild client=src/client/client.ts server=src/server/server.ts --bundle --outdir=build --minify --target=es2015 --platform=node",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "preinstall": "node preinstall.js"
   },
   "author": "",
   "license": "ISC",

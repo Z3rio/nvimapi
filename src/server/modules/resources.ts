@@ -21,19 +21,56 @@ export function createResources(app: Express) {
     });
   });
 
+  app.get("/resources/names", (req: Request, res: Response) => {
+    res.status(200);
+    const resources = [];
+
+    if (req.query && req.query.states) {
+      const states = req.query.states.toString().split(",");
+
+      for (let i = 1; i < GetNumResources(); i++) {
+        const resourceName = GetResourceByFindIndex(i);
+
+        if (states.includes(GetResourceState(resourceName))) {
+          resources.push(resourceName);
+        }
+      }
+    } else {
+      for (let i = 1; i < GetNumResources(); i++) {
+        resources.push(GetResourceByFindIndex(i));
+      }
+    }
+
+    res.json({
+      list: resources,
+    });
+  });
+
   app.post("/resources/:name/restart", (req: Request, res: Response) => {
     if (req.params && req.params.name) {
-      ExecuteCommand(`restart ${req.params.name}`);
       res.status(200);
-      res.json({});
+      if (GetResourceState(req.params.name) !== "started") {
+        res.json({
+          err: "Resource is not started",
+        });
+      } else {
+        ExecuteCommand(`restart ${req.params.name}`);
+        res.json({});
+      }
     }
   });
 
   app.post("/resources/:name/stop", (req: Request, res: Response) => {
     if (req.params && req.params.name) {
-      ExecuteCommand(`stop ${req.params.name}`);
       res.status(200);
-      res.json({});
+      if (GetResourceState(req.params.name) !== "started") {
+        res.json({
+          err: "Resource is not started",
+        });
+      } else {
+        ExecuteCommand(`stop ${req.params.name}`);
+        res.json({});
+      }
     }
   });
 
@@ -47,9 +84,15 @@ export function createResources(app: Express) {
 
   app.post("/resources/:name/start", (req: Request, res: Response) => {
     if (req.params && req.params.name) {
-      ExecuteCommand(`start ${req.params.name}`);
       res.status(200);
-      res.json({});
+      if (GetResourceState(req.params.name) !== "stopped") {
+        res.json({
+          err: "Resource is not stopped",
+        });
+      } else {
+        ExecuteCommand(`start ${req.params.name}`);
+        res.json({});
+      }
     }
   });
 }
